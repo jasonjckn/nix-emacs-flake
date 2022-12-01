@@ -1,0 +1,5 @@
+#!/usr/bin/env -S bash -x
+
+
+nix build --json | jq -r '.[].outputs | to_entries[].value' | cachix push nix-emacs-flake
+nix flake archive --json | jq -r '.path,(.inputs|to_entries[].value.path)' | cachix push nix-emacs-flake
